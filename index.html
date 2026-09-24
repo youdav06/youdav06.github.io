@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>David You, Mechanical Engineering Portfolio</title>
+<meta name="description" content="David You is a mechanical engineering student at Northeastern University who designs, builds, and tests hardware. Open to mechanical engineering co-op roles.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400;62..125,500;62..125,600;62..125,800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F2F4F3;     /* drawing sheet */
+    --sheet: #FAFBFA;
+    --ink: #1E2327;       /* pencil ink */
+    --graphite: #5A6168;
+    --grid: #D5DADD;
+    --redline: #C8102E;   /* markup red */
+    --font: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font: 400 1.0625rem/1.6 var(--font); font-stretch: 100%;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  a:focus-visible { outline: 3px solid var(--redline); outline-offset: 3px; }
+  .wrap { max-width: 70rem; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  .top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.5rem 0; }
+  .brand { font-weight: 600; font-stretch: 125%; text-decoration: none; }
+  .top nav { display: flex; gap: 1.5rem; font-size: 0.9375rem; }
+  .top nav a { color: var(--graphite); text-decoration: none; }
+  .top nav a:hover { color: var(--ink); }
+
+  /* Hero */
+  .hero { padding: 3.5rem 0 4rem; }
+  .hero h1 {
+    margin: 0; font-weight: 800; font-stretch: 125%;
+    font-size: clamp(3rem, 10vw, 7.5rem); line-height: 0.92; letter-spacing: -0.035em;
+  }
+
+  /* Dimension line under the name: the one signature element */
+  .dim {
+    position: relative; display: flex; align-items: center; gap: 0.9rem;
+    height: 1.75rem; margin: 1.25rem 0 2.5rem;
+    border-left: 1px solid var(--ink); border-right: 1px solid var(--ink);
+    font-size: 0.9375rem; color: var(--graphite);
+  }
+  .dim::before, .dim::after { content: ""; flex: 1; height: 1px; background: var(--ink); }
+  .dim::before { transform-origin: right center; }
+  .dim::after { transform-origin: left center; }
+  .dim .arrow {
+    position: absolute; top: 50%; width: 11px; height: 7px; margin-top: -3.5px; background: var(--redline);
+  }
+  .dim .arrow.l { left: 0; clip-path: polygon(0 50%, 100% 0, 100% 100%); }
+  .dim .arrow.r { right: 0; clip-path: polygon(0 0, 100% 50%, 0 100%); }
+  .dim span.label { white-space: nowrap; }
+  @keyframes draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes appear { from { opacity: 0; } to { opacity: 1; } }
+  .dim::before, .dim::after { animation: draw 900ms cubic-bezier(.2,.7,.2,1) both 200ms; }
+  .dim .arrow, .dim .label { animation: appear 300ms ease-out both 1000ms; }
+  @media (prefers-reduced-motion: reduce) {
+    .dim::before, .dim::after, .dim .arrow, .dim .label { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  .hero-body { display: grid; gap: 2.5rem; grid-template-columns: 1fr; align-items: end; }
+  .lede { font-size: 1.25rem; line-height: 1.5; max-width: 34rem; margin: 0 0 2rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .btn {
+    display: inline-block; padding: 0.8rem 1.2rem; border: 1.5px solid var(--ink);
+    font: 600 0.9375rem/1 var(--font); text-decoration: none; background: transparent;
+  }
+  .btn.primary { background: var(--ink); color: var(--sheet); }
+  .btn:hover { border-color: var(--redline); background: var(--redline); color: #fff; }
+
+  /* Title block, as on an engineering drawing */
+  .title-block {
+    display: grid; grid-template-columns: 1fr 1fr; background: var(--sheet);
+    border: 1.5px solid var(--ink); margin: 0;
+  }
+  .title-block div { padding: 0.6rem 0.8rem; border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+  .title-block div:nth-child(2n) { border-right: 0; }
+  .title-block div:nth-last-child(-n+2) { border-bottom: 0; }
+  .title-block .wide { grid-column: 1 / -1; border-right: 0; }
+  .title-block dt { font-size: 0.75rem; color: var(--graphite); }
+  .title-block dd { margin: 0.1rem 0 0; font-weight: 600; font-size: 0.975rem; line-height: 1.35; }
+  @media (min-width: 900px) { .hero-body { grid-template-columns: 1fr 24rem; } }
+
+  /* Sections */
+  section { padding: 4rem 0; border-top: 1.5px solid var(--ink); }
+  h2 { margin: 0 0 0.5rem; font-weight: 800; font-stretch: 125%; font-size: clamp(1.9rem, 4vw, 2.75rem); line-height: 1.05; letter-spacing: -0.02em; }
+  .intro { color: var(--graphite); max-width: 36rem; margin: 0 0 2.5rem; }
+
+  /* Projects */
+  .project { display: grid; gap: 2rem; grid-template-columns: 1fr; padding: 2.5rem 0; border-bottom: 1px solid var(--grid); }
+  .project:last-child { border-bottom: 0; padding-bottom: 0; }
+  .project h3 { margin: 0 0 0.2rem; font-weight: 600; font-stretch: 112%; font-size: 1.75rem; line-height: 1.15; }
+  .context { margin: 0 0 1.25rem; color: var(--graphite); font-size: 0.9375rem; }
+  .project p { max-width: 38rem; margin: 0 0 0.9rem; }
+
+  .specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); gap: 0; margin: 1.5rem 0; border-top: 1px solid var(--ink); max-width: 38rem; }
+  .specs div { padding: 0.75rem 0.75rem 0.75rem 0; border-bottom: 1px solid var(--grid); }
+  .specs dt { font-size: 0.8125rem; color: var(--graphite); }
+  .specs dd { margin: 0; font-weight: 800; font-stretch: 112%; font-size: 1.5rem; line-height: 1.2; }
+
+  .tools { display: flex; flex-wrap: wrap; gap: 0.4rem; list-style: none; padding: 0; margin: 0; }
+  .tools li { font-size: 0.8125rem; padding: 0.25rem 0.6rem; border: 1px solid var(--grid); background: var(--sheet); }
+
+  /* Image slots styled as blank drawing views; replace with real photos/renders */
+  .view {
+    margin: 0; align-self: start; aspect-ratio: 4 / 3; border: 1.5px solid var(--ink);
+    background-color: var(--sheet);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 24px 24px;
+    display: flex; align-items: center; justify-content: center; text-align: center; padding: 1.5rem;
+  }
+  .view img { width: 100%; height: 100%; object-fit: cover; }
+  .view figcaption { background: var(--sheet); padding: 0.5rem 0.75rem; font-size: 0.875rem; color: var(--graphite); max-width: 18rem; }
+  @media (min-width: 900px) {
+    .project { grid-template-columns: 1fr 26rem; gap: 3.5rem; }
+    .project:nth-of-type(even) .view { order: -1; }
+    .project:nth-of-type(even) { grid-template-columns: 26rem 1fr; }
+  }
+
+  /* Experience */
+  .jobs { list-style: none; margin: 0; padding: 0; max-width: 48rem; }
+  .jobs li { display: grid; grid-template-columns: 1fr; gap: 0.25rem; padding: 1.4rem 0; border-bottom: 1px solid var(--grid); }
+  .jobs .when { font-size: 0.9375rem; color: var(--graphite); }
+  .jobs h3 { margin: 0; font-weight: 600; font-size: 1.1875rem; line-height: 1.3; }
+  .jobs .org { color: var(--graphite); }
+  .jobs p { margin: 0.4rem 0 0; }
+  @media (min-width: 720px) { .jobs li { grid-template-columns: 11rem 1fr; gap: 1.5rem; } }
+
+  /* Skills */
+  .skills { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  .skills h3 { margin: 0 0 0.5rem; font-weight: 600; font-size: 1.0625rem; }
+  .skills p { margin: 0; color: var(--graphite); font-size: 0.9375rem; }
+  .involvement { margin-top: 2.5rem; max-width: 44rem; color: var(--graphite); }
+  .involvement strong { color: var(--ink); }
+
+  /* Contact */
+  .contact h2 { max-width: 16ch; font-size: clamp(2.2rem, 6vw, 4rem); }
+  .contact p { color: var(--graphite); max-width: 34rem; margin: 1rem 0 2rem; }
+  footer { padding: 2rem 0 3rem; font-size: 0.8125rem; color: var(--graphite); border-top: 1px solid var(--grid); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#">David You</a>
+    <nav aria-label="Page sections">
+      <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h1>David You</h1>
+      <div class="dim" aria-hidden="true">
+        <i class="arrow l"></i><span class="label">Mechanical Engineering, Northeastern University</span><i class="arrow r"></i>
+      </div>
+
+      <div class="hero-body">
+        <div>
+          <p class="lede">I design parts, build them, and test them until the numbers hold up. My work spans CAD and fabrication, embedded prototypes, lab characterization, and medical device verification at Philips.</p>
+          <div class="actions">
+            <a class="btn primary" href="mailto:You.Dav@northeastern.edu">Email me</a>
+            <a class="btn" href="you_david_resume.pdf" download>Download résumé</a>
+            <a class="btn" href="https://www.linkedin.com/in/david-you-60a083379">LinkedIn</a>
+          </div>
+        </div>
+
+        <dl class="title-block" aria-label="Summary">
+          <div><dt>Discipline</dt><dd>Mechanical Engineering, B.S.</dd></div>
+          <div><dt>Graduation</dt><dd>May 2029</dd></div>
+          <div><dt>GPA</dt><dd>3.64, Dean’s List</dd></div>
+          <div><dt>Languages</dt><dd>English, Chinese</dd></div>
+          <div class="wide"><dt>Core tools</dt><dd>SOLIDWORKS, AutoCAD, MATLAB, Python, GD&amp;T</dd></div>
+          <div class="wide"><dt>Looking for</dt><dd>Mechanical design, R&amp;D, or test engineering co-op</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <section id="work" aria-labelledby="work-title">
+      <h2 id="work-title">Selected work</h2>
+      <p class="intro">Four projects, each with the problem, my role, and how I measured the result.</p>
+
+      <article class="project">
+        <div>
+          <h3>Borealga: spring-powered pickleball launcher</h3>
+          <p class="context">Team project, January to April 2026. Exhibited at Boston Children’s Museum Fun Labs.</p>
+          <p>We needed an interactive exhibit that launched a ball safely and consistently, then told kids right away whether they hit the target.</p>
+          <p>I designed a PETG plunger around a 30.42 lb compression spring, iterating until the launcher fired reliably every time. For the target, I built an IR break-beam sensor on a Raspberry Pi Pico, programmed in MicroPython, that lights an LED the moment the beam breaks.</p>
+          <dl class="specs">
+            <div><dt>Launch reliability</dt><dd>100%</dd></div>
+            <div><dt>Shots tested</dt><dd>30+</dd></div>
+            <div><dt>Hit feedback</dt><dd>&lt;500 ms</dd></div>
+            <div><dt>Kids engaged</dt><dd>70+</dd></div>
+          </dl>
+          <ul class="tools" aria-label="Tools used">
+            <li>SOLIDWORKS</li><li>PETG 3D printing</li><li>Spring selection</li><li>Raspberry Pi Pico</li><li>MicroPython</li>
+          </ul>
+        </div>
+        <figure class="view">
+          <figcaption>Add a photo: the launcher at Fun Labs, or a CAD render of the plunger assembly</figcaption>
+        </figure>
+      </article>
+
+      <article class="project">
+        <div>
+          <h3>Ferrite core inductance characterization</h3>
+          <p class="context">Research, W. M. Keck Laboratory for Integrated Ferroics, May 2026 to present.</p>
+          <p>The lab needed data on how nickel-zinc ferrite cores behave across frequency and coil geometry, to choose the lowest-loss setup for inductive assemblies.</p>
+          <p>I built the coil assemblies, validated field output using statistical error analysis, and swept each core from 10 kHz to 1 MHz. Plotting inductance against turns across more than 10 configurations confirmed the expected N² relationship, and I extracted core permeability from the linearized fit.</p>
+          <dl class="specs">
+            <div><dt>Frequency sweep</dt><dd>10 kHz–1 MHz</dd></div>
+            <div><dt>Configurations</dt><dd>10+</dd></div>
+            <div><dt>Model confirmed</dt><dd>L ∝ N²</dd></div>
+          </dl>
+          <ul class="tools" aria-label="Tools used">
+            <li>Coil fabrication</li><li>MATLAB</li><li>Excel</li><li>Statistical error analysis</li>
+          </ul>
+        </div>
+        <figure class="view">
+          <figcaption>Add a figure: your inductance-vs-N² plot with the linear fit, or a photo of the coil test setup</figcaption>
+        </figure>
+      </article>
+
+      <article class="project">
+        <div>
+          <h3>OverIDE: integrated hardware system</h3>
+          <p class="context">Semester capstone, September to December 2025. Team lead.</p>
+          <p>Our team had to take a multi-subsystem design from concept to a working, verified build within one semester.</p>
+          <p>I led the team and reported status, schedule, and risk to stakeholders. I produced CAD models, drawings, and documentation for more than 25 components in AutoCAD, then integrated five hardware subsystems with over 500 lines of Python under Git-based configuration control. I wrote the verification protocols we used to prove the system worked.</p>
+          <dl class="specs">
+            <div><dt>Components drawn</dt><dd>25+</dd></div>
+            <div><dt>Subsystems integrated</dt><dd>5</dd></div>
+            <div><dt>Response reliability</dt><dd>95%</dd></div>
+          </dl>
+          <ul class="tools" aria-label="Tools used">
+            <li>AutoCAD</li><li>Python</li><li>Git</li><li>Verification protocols</li><li>Risk reporting</li>
+          </ul>
+        </div>
+        <figure class="view">
+          <figcaption>Add a photo: the finished system, or one detailed drawing sheet</figcaption>
+        </figure>
+      </article>
+
+      <article class="project">
+        <div>
+          <h3>Autonomous navigation robot</h3>
+          <p class="context">Personal project, July to August 2024.</p>
+          <p>I wanted to build a vehicle that could find its own way around obstacles, with a frame I designed rather than a kit.</p>
+          <p>I designed and 3D-printed 8 custom frame and mounting parts, going through more than 15 iterations to tune material choice and tolerances for manufacturability. I then programmed an Arduino Uno with ultrasonic sensors in over 300 lines of C++, refining detection through structured testing.</p>
+          <dl class="specs">
+            <div><dt>Custom parts</dt><dd>8</dd></div>
+            <div><dt>Design iterations</dt><dd>15+</dd></div>
+            <div><dt>Stability gain</dt><dd>40%</dd></div>
+            <div><dt>Detection accuracy</dt><dd>92%</dd></div>
+          </dl>
+          <ul class="tools" aria-label="Tools used">
+            <li>SOLIDWORKS</li><li>FDM printing</li><li>DFM</li><li>Arduino</li><li>C++</li>
+          </ul>
+        </div>
+        <figure class="view">
+          <figcaption>Add a photo: the robot beside an early and a final printed frame, showing the iterations</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section id="experience" aria-labelledby="exp-title">
+      <h2 id="exp-title">Experience</h2>
+      <p class="intro">Full details are on my résumé.</p>
+      <ol class="jobs" reversed>
+        <li>
+          <span class="when">May 2026 to present</span>
+          <div>
+            <h3>Research Assistant <span class="org">W. M. Keck Laboratory for Integrated Ferroics</span></h3>
+            <p>Build and characterize inductive coil assemblies; see the ferrite project above.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when">July to August 2026</span>
+          <div>
+            <h3>EXP Explorer <span class="org">Makerspace at EXP, Northeastern</span></h3>
+            <p>Ran SLA printers, woodworking power tools, and industrial sewing machines, and troubleshot equipment faults to keep the shop running.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when">April to August 2025</span>
+          <div>
+            <h3>Engineering Intern <span class="org">Philips, patient monitoring R&amp;D</span></h3>
+            <p>Validated 50+ design requirements and reviewed compliance protocols across 3 FDA submission packages. Worked with 8 engineers to streamline documentation, cutting review cycle time by 20%.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when">March 2024 to present</span>
+          <div>
+            <h3>Customer Service Associate <span class="org">Town Pantry</span></h3>
+            <p>Handle 100+ transactions and $2,000+ per shift with zero discrepancies; trained 3 new team members.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section id="skills" aria-labelledby="skills-title">
+      <h2 id="skills-title">Skills</h2>
+      <p class="intro">Grouped by the stage of the work.</p>
+      <div class="skills">
+        <div><h3>Design</h3><p>SOLIDWORKS detail, assembly, and installation drawings; AutoCAD; GD&amp;T fundamentals; tolerance analysis; design for manufacturing</p></div>
+        <div><h3>Build</h3><p>FDM and SLA 3D printing, rapid prototyping, material selection, soldering, hand and power tools</p></div>
+        <div><h3>Test and verify</h3><p>Structured testing, statistical error analysis, verification and validation, requirements tracing</p></div>
+        <div><h3>Code and document</h3><p>MATLAB, Python, C++, MicroPython, Arduino, Raspberry Pi, Git, configuration control, engineering change requests</p></div>
+      </div>
+      <p class="involvement"><strong>Involvement:</strong> Northeastern Electric Racing, American Society of Mechanical Engineers, Lead360, and Little Brothers – Friends of the Elderly.</p>
+    </section>
+
+    <section id="contact" class="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Hiring a mechanical engineering co-op?</h2>
+      <p>I’d be glad to walk you through any of these projects. Email is the fastest way to reach me.</p>
+      <div class="actions">
+        <a class="btn primary" href="mailto:You.Dav@northeastern.edu">You.Dav@northeastern.edu</a>
+        <a class="btn" href="you_david_resume.pdf" download>Download résumé</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>David You, Boston, MA. Last updated September 2026.</footer>
+</div>
+</body>
+</html>
